@@ -47,9 +47,9 @@ public class DisplayContact extends Activity{
                 id_To_Update = Value;
                 rs.moveToFirst();
 
-                String nam = rs.getString(rs.getColumnIndex(DBHelper.CONTACTS_COLUMN_NAME));
-                String phon = rs.getString(rs.getColumnIndex(DBHelper.CONTACTS_COLUMN_PHONE));
-                String emai = rs.getString(rs.getColumnIndex(DBHelper.CONTACTS_COLUMN_EMAIL));
+                String id = rs.getString(rs.getColumnIndex(DBHelper.COLUMN_ID));
+                String name = rs.getString(rs.getColumnIndex(DBHelper.COLUMN_NAME));
+                String parameter = rs.getString(rs.getColumnIndex(DBHelper.COLUMN_PARAMETER));
                 String stree = rs.getString(rs.getColumnIndex(DBHelper.CONTACTS_COLUMN_STREET));
                 String plac = rs.getString(rs.getColumnIndex(DBHelper.CONTACTS_COLUMN_CITY));
 
