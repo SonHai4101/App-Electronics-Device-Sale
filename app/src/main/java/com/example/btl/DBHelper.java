@@ -21,6 +21,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String COLUMN_NAME = "p_name";
     public static final String COLUMN_DESCRIBE = "p_describe";
     public static final String COLUMN_QUANTITY = "p_quantity";
+    public static final String COLUMN_PRICE = "p_price";
     private HashMap hp;
 
     public DBHelper(@Nullable Context context) {
@@ -34,7 +35,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 "(" + COLUMN_ID + "INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_NAME + "TEXT, " +
                 COLUMN_DESCRIBE + "TEXT, " +
-                COLUMN_QUANTITY + "INTEGER" + ")";
+                COLUMN_QUANTITY + "INTEGER" +
+                COLUMN_PRICE + "DOUBLE" + ")";
         sqLiteDatabase.execSQL(sql);
     }
 
@@ -44,12 +46,15 @@ public class DBHelper extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);
     }
 
-    public boolean insertProduct(String name, String describe, int quantity) {
+    public boolean insertProduct(String name, String describe, int quantity, double price) {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("p_name", name);
         contentValues.put("p_describe", describe);
         contentValues.put("p_quantity", quantity);
+        contentValues.put("p_price", price);
+
+
         sqLiteDatabase.insert("product", null, contentValues);
         return true;
     }
@@ -74,6 +79,7 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put("p_describe", describe);
         contentValues.put("p_quantity", quantity);
         sqLiteDatabase.update("product", contentValues, "id = ?", new String[]{Integer.toString(id)});
+        sqLiteDatabase.close();
         return true;
     }
 
@@ -88,9 +94,11 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor res = sqLiteDatabase.rawQuery("select * from product", null);
         res.moveToFirst();
         while (res.isAfterLast() == false) {
-            products.add(res.getString(res.getColumnIndex(COLUMN_NAME)));
+            int index = res.getColumnIndex(COLUMN_NAME);
+            products.add(res.getString(index));
             res.moveToNext();
         }
+        sqLiteDatabase.close();
         return products;
     }
 }
