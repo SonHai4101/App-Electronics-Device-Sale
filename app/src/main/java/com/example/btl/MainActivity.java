@@ -1,25 +1,27 @@
 package com.example.btl;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.widget.Button;
+
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.database.sqlite.SQLiteDatabase;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-    public final static String EXTRA_MESSAGE = "MESSAGE";
-    private ListView obj;
-    DBHelper mydb;
-
+    Button login, register;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mydb = new DBHelper(this);
+        login = (Button) findViewById(R.id.btn_sign_in);
+        register = (Button) findViewById(R.id.btn_sign_up);
+        ClickLogin();
+        ClickRegister();
+    }
+    public void ClickLogin(){
+        login.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, LoginActivity.class)));
+    }
+    public void ClickRegister(){
+        register.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, RegisterActivity.class)));
     }
 }
